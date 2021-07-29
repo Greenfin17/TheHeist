@@ -6,7 +6,7 @@ namespace TheHeist
 {
     class Program
     {
-        static bool ParseName(ref string firstName, ref string lastName)
+        static bool ParseName(ref string firstName, ref string lastName, ref bool continueInput)
         {
             bool returnVal = false;
             string input = Console.ReadLine();
@@ -17,12 +17,18 @@ namespace TheHeist
                 lastName = words[1];
                 returnVal = true;
             }
+            else if (input == String.Empty)
+            {
+                continueInput = false;
+                returnVal = true;
+            }
             else {
                 Console.WriteLine("Enter a first and last name only");
+                returnVal = false;
             }
             return returnVal;
         }
-        static bool GetMemberInfo(ref Person personObj)
+        static bool GetMemberInfo(ref Person personObj, ref bool continueInput)
         {
             bool validInput = true;
             string firstName = String.Empty;
@@ -30,41 +36,66 @@ namespace TheHeist
             int skill = -1;
             float courage = -1;
             Console.WriteLine("Enter the team member's first and last name");
-            if (!ParseName(ref firstName, ref lastName)){
+            Console.WriteLine("Enter a blank line to exit.");
+            if (!ParseName(ref firstName, ref lastName, ref continueInput)){
                 Console.Write("Invalid input for first and last name");
                 validInput = false;
             }
-            Console.WriteLine("Enter the team member's skill on a scale of 1-10:");
-            string skillInput = Console.ReadLine();
-            if (!int.TryParse(skillInput, out skill))
+            if (validInput && continueInput)
             {
-                Console.Write("Invalid input for skill level");
-                validInput = false;
-            } 
-            Console.WriteLine("Enter the team member's courage on a scale of 0.0 to 2.0");
-            string courageInput = Console.ReadLine();
-            if (!float.TryParse(courageInput, out courage))
-            {
-                Console.Write("Invalide input for courage level");
-                validInput = false;
-            }
-
-            if (validInput)
-            {
-                personObj = new Person(firstName, lastName, skill, courage);
+                Console.WriteLine("Enter the team member's skill on a scale of 1-10:");
+                string skillInput = Console.ReadLine();
+                if (!int.TryParse(skillInput, out skill))
+                {
+                    Console.Write("Invalid input for skill level");
+                    validInput = false;
+                }
+                if (validInput)
+                {
+                    Console.WriteLine("Enter the team member's courage on a scale of 0.0 to 2.0");
+                    string courageInput = Console.ReadLine();
+                    if (!float.TryParse(courageInput, out courage))
+                    {
+                        Console.Write("Invalide input for courage level");
+                        validInput = false;
+                    }
+                    if (validInput)
+                    {
+                        personObj = new Person(firstName, lastName, skill, courage);
+                    }
+                }
             }
             return validInput;
         }
         static void Main(string[] args)
         {
             Person personObj = null;
+            bool continueInput = true;
             List<Person> teamList = new List<Person>();
             Console.WriteLine("Plan Your Heist!");
-            if (GetMemberInfo(ref personObj))
-            {
-                teamList.Add(personObj);
-                Console.WriteLine($"     So far the team consists of");
-                teamList[0].Status();
+            while (continueInput){
+                if (GetMemberInfo(ref personObj, ref continueInput))
+                {
+                    if (continueInput)
+                    {
+                        teamList.Add(personObj);
+                        Console.WriteLine($"     So far the team consists of");
+                        foreach (var team in teamList)
+                        {
+                            team.Status();
+                            Console.Write('\n');
+                        }
+                    } else
+                    {
+                        Console.WriteLine($"     The team consists of");
+                        foreach (var team in teamList)
+                        {
+                            team.Status();
+                            Console.Write('\n');
+                        }
+
+                    }
+                }
             }
         }
     }
