@@ -82,14 +82,27 @@ namespace TheHeist
             }
             if (teamList.Count > 0)
             {
-                Console.WriteLine($"Attempting to rob {bankTarget.Name}.");
-                if (bankTarget.HeistAttempt(teamList))
+                int runs = 0;
+                string input;
+                Console.WriteLine("Enter number of trial runs of bank heist");
+                input = Console.ReadLine();
+                if (int.TryParse(input, out runs))
                 {
-                    Console.WriteLine($"You team has successfully pulled off the hiest of {bankTarget.Name}");
-                } else
-                {
-                    Console.WriteLine($"Failed hiest of {bankTarget.Name}");
+                    for (int i = 0; i < runs; i++)
+                    {
+                        Console.WriteLine($"Attempting to rob {bankTarget.Name}:");
+                        if (bankTarget.HeistAttempt(teamList))
+                        {
+                            Console.WriteLine($"You team has successfully pulled off the hiest of {bankTarget.Name}\n");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Failed hiest of {bankTarget.Name}\n");
+                        }
+
+                    }
                 }
+
             }
 
         }

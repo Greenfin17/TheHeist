@@ -34,8 +34,8 @@ namespace TheHeist.Targets
                 skillSum += member.Skill;
             }
 
-            Console.WriteLine($"The heist team has a combined skill level of {skillSum}.");
-            Console.WriteLine($"The bank difficulty is {Difficulty}.");
+            Console.WriteLine($"     The heist team has a combined skill level of {skillSum}.");
+            Console.WriteLine($"     The bank difficulty is {Difficulty}.");
 
             if (skillSum > Difficulty + luck)
             {
