@@ -86,10 +86,11 @@ namespace TheHeist
                         }
                     } else if (teamList.Count > 0)
                     {
+                        Console.WriteLine($"     There are {teamList.Count} team members.");
                         Console.WriteLine($"     The team consists of");
-                        foreach (var team in teamList)
+                        foreach (var member in teamList)
                         {
-                            team.Status();
+                            member.Status();
                             Console.Write('\n');
                         }
 

@@ -23,7 +23,7 @@ namespace TheHeist.People
 
         public void Status()
         {
-            Console.WriteLine($"               {First} {Last}:");
+            Console.WriteLine($"               {First} {Last}");
             Console.WriteLine($"               Skill: {Skill}, Courage: {Courage}");
         }
     }
