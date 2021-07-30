@@ -23,7 +23,6 @@ namespace TheHeist
                 returnVal = true;
             }
             else {
-                Console.WriteLine("Enter a first and last name only");
                 returnVal = false;
             }
             return returnVal;
@@ -38,25 +37,25 @@ namespace TheHeist
             Console.WriteLine("Enter the team member's first and last name");
             Console.WriteLine("Enter a blank line to exit.");
             if (!ParseName(ref firstName, ref lastName, ref continueInput)){
-                Console.Write("Invalid input for first and last name");
+                Console.WriteLine("Invalid input for first and last name");
                 validInput = false;
             }
             if (validInput && continueInput)
             {
                 Console.WriteLine("Enter the team member's skill on a scale of 1-10:");
                 string skillInput = Console.ReadLine();
-                if (!int.TryParse(skillInput, out skill))
+                if (!int.TryParse(skillInput, out skill) || skill < 1 || skill > 10) 
                 {
-                    Console.Write("Invalid input for skill level");
+                    Console.WriteLine("Invalid input for skill level");
                     validInput = false;
                 }
                 if (validInput)
                 {
                     Console.WriteLine("Enter the team member's courage on a scale of 0.0 to 2.0");
                     string courageInput = Console.ReadLine();
-                    if (!float.TryParse(courageInput, out courage))
+                    if (!float.TryParse(courageInput, out courage) || ( courage < 0.0 || courage > 2.0))
                     {
-                        Console.Write("Invalide input for courage level");
+                        Console.WriteLine("Invalid input for courage level");
                         validInput = false;
                     }
                     if (validInput)
@@ -85,7 +84,7 @@ namespace TheHeist
                             team.Status();
                             Console.Write('\n');
                         }
-                    } else
+                    } else if (teamList.Count > 0)
                     {
                         Console.WriteLine($"     The team consists of");
                         foreach (var team in teamList)
@@ -94,7 +93,11 @@ namespace TheHeist
                             Console.Write('\n');
                         }
 
+                    } else
+                    {
+                        Console.WriteLine($"     There is nobody on the team");
                     }
+
                 }
             }
         }
