@@ -14,7 +14,7 @@ namespace TheHeist.Targets
 
         public bool IsRobbed { get; set; }
 
-        public Bank(string name, int difficulty = 100)
+        public Bank(string name, int difficulty = 25)
         {
             Name = name;
             Difficulty = difficulty;
@@ -23,6 +23,10 @@ namespace TheHeist.Targets
 
         public bool HeistAttempt(List<Person> robberyTeam)
         {
+            // create random number for heist luck value
+            Random rand = new Random();
+            int luck = rand.Next(-10, 10);
+
             int skillSum = 0;
             bool returnVal = false;
             foreach(var member in robberyTeam)
@@ -30,7 +34,10 @@ namespace TheHeist.Targets
                 skillSum += member.Skill;
             }
 
-            if (skillSum > Difficulty)
+            Console.WriteLine($"The heist team has a combined skill level of {skillSum}.");
+            Console.WriteLine($"The bank difficulty is {Difficulty}.");
+
+            if (skillSum > Difficulty + luck)
             {
                 returnVal = true;
             }
