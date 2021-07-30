@@ -1,6 +1,7 @@
 ﻿using System;
-using TheHeist.People;
 using System.Collections.Generic;
+using TheHeist.People;
+using TheHeist.Targets;
 
 namespace TheHeist
 {
@@ -69,38 +70,28 @@ namespace TheHeist
         static void Main(string[] args)
         {
             Person personObj = null;
+            Bank bankTarget = new Bank("Last Bank");
             bool continueInput = true;
             List<Person> teamList = new List<Person>();
             Console.WriteLine("Plan Your Heist!");
             while (continueInput){
-                if (GetMemberInfo(ref personObj, ref continueInput))
+                if (GetMemberInfo(ref personObj, ref continueInput) && continueInput)
                 {
-                    if (continueInput)
-                    {
-                        teamList.Add(personObj);
-                        Console.WriteLine($"     So far the team consists of");
-                        foreach (var team in teamList)
-                        {
-                            team.Status();
-                            Console.Write('\n');
-                        }
-                    } else if (teamList.Count > 0)
-                    {
-                        Console.WriteLine($"     There are {teamList.Count} team members.");
-                        Console.WriteLine($"     The team consists of");
-                        foreach (var member in teamList)
-                        {
-                            member.Status();
-                            Console.Write('\n');
-                        }
-
-                    } else
-                    {
-                        Console.WriteLine($"     There is nobody on the team");
-                    }
-
+                    teamList.Add(personObj);
                 }
             }
+            if (teamList.Count > 0)
+            {
+                Console.WriteLine($"Attempting to rob {bankTarget.Name}.");
+                if (bankTarget.HeistAttempt(teamList))
+                {
+                    Console.WriteLine($"You team has successfully pulled off the hiest of {bankTarget.Name}");
+                } else
+                {
+                    Console.WriteLine($"Failed hiest of {bankTarget.Name}");
+                }
+            }
+
         }
     }
 }
