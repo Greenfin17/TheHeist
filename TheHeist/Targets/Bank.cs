@@ -27,15 +27,28 @@ namespace TheHeist.Targets
             Random rand = new Random();
             int luck = rand.Next(-10, 10);
 
+            // create test for courage
+            float fright = (float)rand.Next(0, 20) / 10;
+
+            // select one randomt team member by index
+            int faintOfHeart = rand.Next(0, robberyTeam.Count - 1);
+
             int skillSum = 0;
             bool returnVal = false;
             foreach(var member in robberyTeam)
             {
                 skillSum += member.Skill;
             }
-
             Console.WriteLine($"     The heist team has a combined skill level of {skillSum}.");
             Console.WriteLine($"     The bank difficulty is {Difficulty}.");
+            
+            // select one random team member and test their criminal courage
+            if(robberyTeam[faintOfHeart].Courage < fright)
+            {
+                Console.Write($"     Uh oh, {robberyTeam[faintOfHeart].getName()}");
+                Console.Write($" has chickened out of the heist.\n");
+                skillSum -= robberyTeam[faintOfHeart].Skill;
+            }
 
             if (skillSum > Difficulty + luck)
             {

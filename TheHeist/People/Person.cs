@@ -21,6 +21,11 @@ namespace TheHeist.People
             Courage = courage;
         }
 
+        public string getName()
+        {
+            return $"{First} {Last}";
+        }
+
         public void Status()
         {
             Console.WriteLine($"               {First} {Last}");
